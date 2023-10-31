@@ -27,6 +27,12 @@ export class Projects {
   @Column('text', { nullable: false })
   content: string;
 
+  @Column({ type: 'boolean', nullable: false })
+  status: boolean;
+
+  @Column('int', { nullable: true, default: 0 })
+  view: number;
+
   @CreateDateColumn({ nullable: true, name: 'created_at' })
   readonly createdAt: Date;
 
