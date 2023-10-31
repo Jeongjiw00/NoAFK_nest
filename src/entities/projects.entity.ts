@@ -18,6 +18,16 @@ export class Projects {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true, name: 'project_id' })
   projectId: number;
 
+  /*
+      project - user : Many To One
+  */
+  @ManyToOne(() => Users, (users) => users.Projects, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'user_id' })
+  Users: Users;
+
   @Column({ type: 'int', unsigned: true, name: 'user_id' })
   userId: number;
 
@@ -30,27 +40,14 @@ export class Projects {
   @Column({ type: 'boolean', nullable: false })
   status: boolean;
 
-  @Column('int', { nullable: true, default: 0 })
+  @Column('int', { nullable: false, default: 0 })
   view: number;
 
-  @CreateDateColumn({ nullable: true, name: 'created_at' })
+  @CreateDateColumn({ nullable: false, name: 'created_at' })
   readonly createdAt: Date;
 
-  @UpdateDateColumn({ nullable: true, name: 'updated_at' })
+  @UpdateDateColumn({ nullable: false, name: 'updated_at' })
   readonly updatedAt: Date;
-
-  @DeleteDateColumn({ nullable: true, default: null, name: 'deleted_at' })
-  readonly deletedAt: Date | null;
-
-  /*
-      project - user : Many To One
-  */
-  @ManyToOne(() => Users, (users) => users.Projects, {
-    onDelete: 'CASCADE',
-    nullable: false,
-  })
-  @JoinColumn({ name: 'user_id' })
-  Users: Users;
 
   /*
       project - comment : One To Many
