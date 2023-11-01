@@ -1,16 +1,24 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
   Param,
   ParseIntPipe,
+  Post,
   Res,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
+import { CreateProjectDto } from './dto/create-project.dto';
 
 @Controller('/api/projects')
 export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
+
+  @Post('/')
+  async createProject(@Body() projectInfo: CreateProjectDto) {
+    return await this.projectsService.createProject(projectInfo);
+  }
 
   @Get('/')
   async getAllProjects() {

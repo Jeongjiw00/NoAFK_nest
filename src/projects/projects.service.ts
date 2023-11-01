@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Projects } from 'src/entities/projects.entity';
 import { Repository } from 'typeorm';
+import { CreateProjectDto } from './dto/create-project.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -9,6 +10,10 @@ export class ProjectsService {
     @InjectRepository(Projects)
     private projectRepository: Repository<Projects>,
   ) {}
+
+  async createProject(projectInfo: CreateProjectDto) {
+    return await this.projectRepository.save(projectInfo);
+  }
 
   async getAllProjects(): Promise<Projects[]> {
     return await this.projectRepository.find({
