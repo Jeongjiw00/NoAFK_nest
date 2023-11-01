@@ -37,7 +37,7 @@ export class Projects {
   @Column('text', { nullable: false })
   content: string;
 
-  @Column({ type: 'boolean', nullable: false })
+  @Column({ type: 'boolean', nullable: false, default: 0 })
   status: boolean;
 
   @Column('int', { nullable: false, default: 0 })
