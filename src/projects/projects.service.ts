@@ -45,4 +45,8 @@ export class ProjectsService {
       throw error;
     }
   }
+
+  async deleteProject(projectId: number) {
+    return await this.projectRepository.delete(projectId);
+  }
 }

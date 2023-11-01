@@ -1,7 +1,12 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Res,
+} from '@nestjs/common';
 import { ProjectsService } from './projects.service';
-import { Projects } from 'src/entities/projects.entity';
-import { title } from 'process';
 
 @Controller('/api/projects')
 export class ProjectsController {
@@ -37,5 +42,12 @@ export class ProjectsController {
       nickname: project.Users.nickname,
       likes: project.Likes.length,
     };
+  }
+
+  @Delete('/:projectId')
+  async deleteProject(@Param('projectId') projectId: number, @Res() res) {
+    await this.projectsService.deleteProject(projectId);
+
+    return res.send();
   }
 }
