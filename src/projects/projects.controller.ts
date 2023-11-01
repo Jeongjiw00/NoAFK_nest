@@ -5,11 +5,13 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Res,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Controller('/api/projects')
 export class ProjectsController {
@@ -56,6 +58,17 @@ export class ProjectsController {
   @Delete('/:projectId')
   async deleteProject(@Param('projectId') projectId: number, @Res() res) {
     await this.projectsService.deleteProject(projectId);
+
+    return res.send();
+  }
+
+  @Patch('/:projectId')
+  async updateProject(
+    @Param('projectId') projectId: number,
+    @Body() updateInfo: UpdateProjectDto,
+    @Res() res,
+  ) {
+    await this.projectsService.updateProject(projectId, updateInfo);
 
     return res.send();
   }
