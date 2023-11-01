@@ -12,7 +12,7 @@ export class ProjectsService {
   ) {}
 
   async createProject(projectInfo: CreateProjectDto) {
-    return await this.projectRepository.save(projectInfo);
+    return await this.projectRepository.save({ userId: 1, ...projectInfo });
   }
 
   async getAllProjects(): Promise<Projects[]> {

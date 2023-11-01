@@ -17,6 +17,7 @@ export class ProjectsController {
 
   @Post('/')
   async createProject(@Body() projectInfo: CreateProjectDto) {
+    //<todo> 로그인 후 user_id값 넘겨주도록
     return await this.projectsService.createProject(projectInfo);
   }
 
