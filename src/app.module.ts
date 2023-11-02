@@ -7,6 +7,9 @@ import { ProjectsModule } from './projects/projects.module';
 import { UsersModule } from './users/users.module';
 import { JwtConfigService } from './config/jwt.config.service';
 import { JwtModule } from '@nestjs/jwt';
+import { RedisConfigService } from './config/redis.config.service';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +20,11 @@ import { JwtModule } from '@nestjs/jwt';
       useClass: TypeOrmConfigService,
       inject: [ConfigService],
     }),
+    RedisModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: RedisConfigService,
+      inject: [ConfigService],
+    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useClass: JwtConfigService,
@@ -24,6 +32,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     ProjectsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [],
