@@ -44,7 +44,6 @@ export class UsersController {
     return res.send();
   }
 
-  // 로그인 유무
   @UseGuards(AuthGuard)
   @Get('/isLoggedIn')
   async isLoggedIn(@Req() req) {
@@ -59,22 +58,18 @@ export class UsersController {
     return { isLoggedIn, userInfo };
   }
 
-  // 로그아웃
   @UseGuards(AuthGuard)
   @Get('/signout')
   async signOut(@Req() req, @Res() res) {
     const { isLoggedIn, userId } = req.auth;
 
-    // 이미 로그아웃 상태라면 불가능한 기능
     if (!isLoggedIn) {
       throw new UnauthorizedException('로그인 중이 아닙니다.');
     }
 
-    // Access Token, Refresh Token 다 지우기
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
 
-    // Redis Refresh Token 지우기
     await this.authService.removeRefreshToken(userId);
 
     return res.send();
