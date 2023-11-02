@@ -12,13 +12,19 @@ import { UsersService } from './users.service';
 import { signUpUserDto } from './dto/signup-user.dto';
 import { signInUserDto } from './dto/signin-user.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('/api/users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private authService: AuthService,
+    private readonly userService: UsersService,
+  ) {}
 
   @Post('/signup')
   async signUp(@Body() userInfo: signUpUserDto) {
+    console.log(userInfo);
+
     return await this.userService.signUp(userInfo);
   }
 
@@ -28,6 +34,7 @@ export class UsersController {
       await this.userService.signInUser(userInfo);
 
     res.cookie('accessToken', accessToken, {
+      //브라우저에서 쿠키에 접근할 수 없도록 제한
       httpOnly: true,
     });
     res.cookie('refreshToken', refreshToken, {
@@ -68,7 +75,7 @@ export class UsersController {
     res.clearCookie('refreshToken');
 
     // Redis Refresh Token 지우기
-    await this.userService.removeRefreshToken(userId);
+    await this.authService.removeRefreshToken(userId);
 
     return res.send();
   }

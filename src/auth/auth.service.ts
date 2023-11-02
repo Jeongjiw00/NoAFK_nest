@@ -1,9 +1,26 @@
+import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import Redis from 'ioredis';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    @InjectRedis() private readonly redis: Redis,
+    private jwtService: JwtService,
+  ) {}
+
+  async getRefreshToken(userId: number) {
+    return await this.redis.get(`refreshToken-${userId}`);
+  }
+
+  async setRefreshToken(userId: number, refreshToken: string) {
+    await this.redis.set(`refreshToken-${userId}`, refreshToken, 'EX', 86400);
+  }
+
+  async removeRefreshToken(userId: number) {
+    await this.redis.del(`refreshToken-${userId}`);
+  }
 
   // Token 검증
   async validateToken(token: string): Promise<boolean> {

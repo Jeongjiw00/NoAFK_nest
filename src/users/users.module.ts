@@ -9,6 +9,7 @@ import { Likes } from 'src/entities/likes.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtConfigService } from 'src/config/jwt.config.service';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { JwtModule } from '@nestjs/jwt';
       useClass: JwtConfigService,
       inject: [ConfigService],
     }),
+    AuthModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],

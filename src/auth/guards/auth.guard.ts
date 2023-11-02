@@ -1,14 +1,12 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from '../auth.service';
-import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private authService: AuthService,
-    private userService: UsersService,
   ) {}
 
   async canActivate(context: ExecutionContext) {
@@ -40,7 +38,7 @@ export class AuthGuard implements CanActivate {
       await this.authService.validateToken(refreshToken);
 
     // Redis 에서 Refresh Token 가져오기
-    const redisRefreshToken = await this.userService.getRefreshToken(userId);
+    const redisRefreshToken = await this.authService.getRefreshToken(userId);
 
     /*
             [로그아웃 상태로 간주]
@@ -59,7 +57,7 @@ export class AuthGuard implements CanActivate {
       response.clearCookie('refreshToken');
 
       // Redis Refresh Token Clear
-      await this.userService.removeRefreshToken(userId);
+      await this.authService.removeRefreshToken(userId);
 
       request.auth = { isLoggedIn: false, userId: null };
 

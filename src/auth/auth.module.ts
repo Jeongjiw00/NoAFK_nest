@@ -21,5 +21,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}

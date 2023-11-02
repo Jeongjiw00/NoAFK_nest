@@ -10,15 +10,14 @@ import { Repository } from 'typeorm';
 import { signUpUserDto } from './dto/signup-user.dto';
 import { signInUserDto } from './dto/signin-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRedis } from '@liaoliaots/nestjs-redis';
-import Redis from 'ioredis';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRedis() private readonly redis: Redis,
     @InjectRepository(Users) private userRepository: Repository<Users>,
     private jwtService: JwtService,
+    private authService: AuthService,
   ) {}
 
   async findExistUser(column) {
@@ -90,18 +89,6 @@ export class UsersService {
     );
   }
 
-  async getRefreshToken(userId: number) {
-    return await this.redis.get(`refreshToken-${userId}`);
-  }
-
-  async setRefreshToken(userId: number, refreshToken: string) {
-    await this.redis.set(`refreshToken-${userId}`, refreshToken, 'EX', 86400);
-  }
-
-  async removeRefreshToken(userId: number) {
-    await this.redis.del(`refreshToken-${userId}`);
-  }
-
   async signInUser(userInfo: signInUserDto) {
     try {
       const user = await this.findUser(userInfo.email);
@@ -121,7 +108,7 @@ export class UsersService {
 
       const refreshToken = await this.createRefreshToken();
 
-      await this.setRefreshToken(user.userId, refreshToken);
+      await this.authService.setRefreshToken(user.userId, refreshToken);
 
       return { accessToken, refreshToken };
     } catch (error) {
