@@ -12,8 +12,8 @@ export class ProjectsService {
     private projectRepository: Repository<Projects>,
   ) {}
 
-  async createProject(projectInfo: CreateProjectDto) {
-    return await this.projectRepository.save({ userId: 1, ...projectInfo });
+  async createProject(userId: number, projectInfo: CreateProjectDto) {
+    return await this.projectRepository.save({ userId, ...projectInfo });
   }
 
   async getAllProjects(): Promise<Projects[]> {
@@ -21,6 +21,14 @@ export class ProjectsService {
       select: ['projectId', 'title', 'view', 'status', 'createdAt'],
       relations: ['Users', 'Likes'],
     });
+  }
+
+  async getUserIdById(projectId: number): Promise<number> {
+    const [project] = await this.projectRepository.find({
+      where: { projectId },
+    });
+
+    return project.userId;
   }
 
   async getProjectById(projectId: number): Promise<Projects> {
