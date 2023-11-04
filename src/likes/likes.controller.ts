@@ -21,14 +21,14 @@ export class LikesController {
   ) {}
 
   @Get('/:projectId')
-  async loadLikes(@Param('projectId') projectId: number) {
+  async getLikes(@Param('projectId') projectId: number) {
     const project = await this.projectService.existProject(projectId);
 
     if (!project) {
       throw new NotFoundException('게시글이 존재하지 않습니다.');
     }
 
-    return await this.likeService.loadLikes(projectId);
+    return await this.likeService.getLikes(projectId);
   }
 
   @UseGuards(AuthGuard)

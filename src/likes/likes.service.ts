@@ -11,7 +11,7 @@ export class LikesService {
   ) {}
 
   // 프로젝트 별 좋아요 수 보기
-  async loadLikes(projectId: number) {
+  async getLikes(projectId: number) {
     try {
       return await this.likeRepository.count({ where: { projectId } });
     } catch (error) {
