@@ -12,8 +12,11 @@ export class ProjectsService {
     private projectRepository: Repository<Projects>,
   ) {}
 
-  async createProject(userId: number, projectInfo: CreateProjectDto) {
-    return await this.projectRepository.save({ userId, ...projectInfo });
+  createProject(
+    userId: number,
+    projectInfo: CreateProjectDto,
+  ): Promise<CreateProjectDto> {
+    return this.projectRepository.save({ userId, ...projectInfo });
   }
 
   async getAllProjects(): Promise<Projects[]> {

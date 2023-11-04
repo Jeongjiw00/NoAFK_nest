@@ -22,14 +22,14 @@ export class ProjectsController {
 
   @UseGuards(AuthGuard)
   @Post('/')
-  async createProject(@Req() req, @Body() projectInfo: CreateProjectDto) {
+  createProject(@Req() req, @Body() projectInfo: CreateProjectDto) {
     const { isLoggedIn, userId } = req.auth;
 
     // 이미 로그아웃 상태라면 불가능한 기능
     if (!isLoggedIn) {
       throw new UnauthorizedException('로그인 중이 아닙니다.');
     }
-    return await this.projectsService.createProject(userId, projectInfo);
+    return this.projectsService.createProject(userId, projectInfo);
   }
 
   @Get('/')
