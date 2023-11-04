@@ -20,7 +20,7 @@ export class Comments {
   @Column({ type: 'text', nullable: false })
   comment: string;
 
-  @PrimaryColumn({
+  @Column({
     type: 'int',
     unsigned: true,
     name: 'project_id',
@@ -28,7 +28,7 @@ export class Comments {
   })
   projectId: number;
 
-  @PrimaryColumn({
+  @Column({
     type: 'int',
     unsigned: true,
     name: 'user_id',
