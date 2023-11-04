@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -83,6 +84,12 @@ export class ProjectsController {
       throw new UnauthorizedException('작성자가 아닙니다.');
     }
 
+    const project = await this.projectsService.existProject(projectId);
+
+    if (!project) {
+      throw new NotFoundException('게시글이 존재하지 않습니다.');
+    }
+
     await this.projectsService.deleteProject(projectId);
 
     return res.send();
@@ -106,6 +113,12 @@ export class ProjectsController {
 
     if (userIdByProject !== userId) {
       throw new UnauthorizedException('작성자가 아닙니다.');
+    }
+
+    const project = await this.projectsService.existProject(projectId);
+
+    if (!project) {
+      throw new NotFoundException('게시글이 존재하지 않습니다.');
     }
 
     await this.projectsService.updateProject(projectId, updateInfo);
