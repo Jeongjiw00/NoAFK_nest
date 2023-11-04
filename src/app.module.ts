@@ -11,6 +11,7 @@ import { RedisConfigService } from './config/redis.config.service';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { AuthModule } from './auth/auth.module';
 import { LikesModule } from './likes/likes.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { LikesModule } from './likes/likes.module';
     UsersModule,
     AuthModule,
     LikesModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [],
