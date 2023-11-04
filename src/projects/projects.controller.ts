@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Req,
@@ -49,7 +48,7 @@ export class ProjectsController {
   }
 
   @Get('/:projectId')
-  async getProjectById(@Param('projectId', ParseIntPipe) projectId: number) {
+  async getProjectById(@Param('projectId') projectId: number) {
     const project = await this.projectsService.getProjectById(projectId);
 
     return {

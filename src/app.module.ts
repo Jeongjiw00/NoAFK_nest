@@ -10,6 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { RedisConfigService } from './config/redis.config.service';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { AuthModule } from './auth/auth.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AuthModule } from './auth/auth.module';
     ProjectsModule,
     UsersModule,
     AuthModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [],

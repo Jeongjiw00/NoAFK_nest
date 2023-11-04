@@ -23,6 +23,12 @@ export class ProjectsService {
     });
   }
 
+  async existProject(projectId: number): Promise<boolean> {
+    return await this.projectRepository.exist({
+      where: { projectId },
+    });
+  }
+
   async getUserIdById(projectId: number): Promise<number> {
     const [project] = await this.projectRepository.find({
       where: { projectId },
