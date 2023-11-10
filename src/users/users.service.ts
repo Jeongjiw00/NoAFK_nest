@@ -11,6 +11,7 @@ import { signUpUserDto } from './dto/signup-user.dto';
 import { signInUserDto } from './dto/signin-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from 'src/auth/auth.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -111,6 +112,28 @@ export class UsersService {
       await this.authService.setRefreshToken(user.userId, refreshToken);
 
       return { accessToken, refreshToken };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 회원 정보 수정
+  async updateUserProfile(userId: number, userInfo: UpdateUserDto) {
+    try {
+      const duplicatedCheckArray = [
+        { email: userInfo.email },
+        { nickname: userInfo.nickname },
+      ];
+
+      for (let column of duplicatedCheckArray) {
+        const exist = await this.findExistUser(column);
+
+        if (exist) {
+          throw new ConflictException(`이미 존재하는 ${column} 입니다.`);
+        }
+      }
+
+      await this.userRepository.update(userId, { ...userInfo });
     } catch (error) {
       throw error;
     }

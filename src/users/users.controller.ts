@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   Req,
   Res,
@@ -13,6 +14,8 @@ import { signUpUserDto } from './dto/signup-user.dto';
 import { signInUserDto } from './dto/signin-user.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { AuthService } from 'src/auth/auth.service';
+import { Users } from 'src/entities/users.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('/api/users')
 export class UsersController {
@@ -73,5 +76,31 @@ export class UsersController {
     await this.authService.removeRefreshToken(userId);
 
     return res.send();
+  }
+
+  // 마이페이지 회원 정보 가져오기
+  @UseGuards(AuthGuard)
+  @Get('/')
+  async getUser(@Req() req): Promise<Users> {
+    const { isLoggedIn, userId } = req.auth;
+
+    if (!isLoggedIn) {
+      throw new UnauthorizedException('로그인 중이 아닙니다.');
+    }
+
+    return await this.userService.findUserByUserId(userId);
+  }
+
+  // 마이페이지 회원 정보 수정
+  @UseGuards(AuthGuard)
+  @Patch('/')
+  async updateUser(@Body() userInfo: UpdateUserDto, @Req() req) {
+    const { isLoggedIn, userId } = req.auth;
+
+    if (!isLoggedIn) {
+      throw new UnauthorizedException('로그인 중이 아닙니다.');
+    }
+
+    return await this.userService.updateUserProfile(userId, userInfo);
   }
 }
