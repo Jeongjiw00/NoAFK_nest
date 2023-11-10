@@ -10,7 +10,7 @@ export class UpdateUserDto {
     /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/,
     { message: 'newPassword' },
   )
-  password: string;
+  password?: string;
 
   @IsOptional()
   @Matches(/^[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AFa-z\d]{2,15}$/, {
