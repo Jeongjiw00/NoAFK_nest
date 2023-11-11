@@ -21,6 +21,25 @@ export class UsersService {
     private authService: AuthService,
   ) {}
 
+  async findAllUsers() {
+    try {
+      return await this.userRepository.find({
+        select: [
+          'userId',
+          'email',
+          'password',
+          'nickname',
+          'profileImg',
+          'introduction',
+          'authLevel',
+          'createdAt',
+        ],
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async findExistUser(column) {
     try {
       return await this.userRepository.count({
@@ -33,6 +52,16 @@ export class UsersService {
 
   async findUserByUserId(userId: number): Promise<Users> {
     const userInfo = await this.userRepository.findOne({
+      select: [
+        'userId',
+        'email',
+        'password',
+        'nickname',
+        'profileImg',
+        'introduction',
+        'authLevel',
+        'createdAt',
+      ],
       where: { userId },
     });
 
