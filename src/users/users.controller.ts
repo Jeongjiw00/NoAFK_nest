@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Patch,
   Post,
   Req,
@@ -31,6 +32,7 @@ export class UsersController {
   }
 
   @Post('/signin')
+  @HttpCode(200)
   async signIn(@Body() userInfo: signInUserDto, @Res() res) {
     const { accessToken, refreshToken } =
       await this.userService.signInUser(userInfo);

@@ -68,4 +68,29 @@ describe('AppController (e2e)', () => {
       });
     });
   });
+
+  describe('/api/users/signin - 로그인', () => {
+    it('POST 200', () => {
+      const userSignInInfo: signInUserDto = {
+        email: 'test@gmail.com',
+        password: 'test1234!',
+      };
+
+      return request(app.getHttpServer())
+        .post('/api/users/signin')
+        .send(userSignInInfo)
+        .expect(200);
+    });
+
+    it('POST 400', () => {
+      const wrongSingInInfo: object = {
+        email: 'test',
+      };
+
+      return request(app.getHttpServer())
+        .post('/api/users/signin')
+        .send(wrongSingInInfo)
+        .expect(400);
+    });
+  });
 });
