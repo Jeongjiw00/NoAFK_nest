@@ -3,14 +3,14 @@ import { UsersService } from './users.service';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { ConflictException, NotFoundException } from '@nestjs/common';
-import { Users } from 'src/entities/users.entity';
+import { Users } from '../../src/entities/users.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmConfigService } from 'src/config/typeorm.config.service';
-import { AuthModule } from 'src/auth/auth.module';
-import { JwtConfigService } from 'src/config/jwt.config.service';
+import { TypeOrmConfigService } from '../../src/config/typeorm.config.service';
+import { AuthModule } from '../../src/auth/auth.module';
+import { JwtConfigService } from '../../src/config/jwt.config.service';
 import { Repository } from 'typeorm';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
-import { RedisConfigService } from 'src/config/redis.config.service';
+import { RedisConfigService } from '../../src/config/redis.config.service';
 import { UsersModule } from './users.module';
 
 describe.skip('UsersService', () => {

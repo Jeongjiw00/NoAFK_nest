@@ -15,7 +15,7 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { AuthGuard } from '../../src/auth/guards/auth.guard';
 
 @Controller('/api/projects')
 export class ProjectsController {

@@ -5,12 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Users } from 'src/entities/users.entity';
+import { Users } from '../../src/entities/users.entity';
 import { Repository } from 'typeorm';
 import { signUpUserDto } from './dto/signup-user.dto';
 import { signInUserDto } from './dto/signin-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../../src/auth/auth.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()

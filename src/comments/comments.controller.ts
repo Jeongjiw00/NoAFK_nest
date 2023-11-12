@@ -13,8 +13,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { ProjectsService } from 'src/projects/projects.service';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { ProjectsService } from '../../src/projects/projects.service';
+import { AuthGuard } from '../../src/auth/guards/auth.guard';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Controller('/api/comments')

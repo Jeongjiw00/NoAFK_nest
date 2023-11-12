@@ -12,9 +12,9 @@ import {
 import { UsersService } from './users.service';
 import { signUpUserDto } from './dto/signup-user.dto';
 import { signInUserDto } from './dto/signin-user.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { AuthService } from 'src/auth/auth.service';
-import { Users } from 'src/entities/users.entity';
+import { AuthGuard } from '../../src/auth/guards/auth.guard';
+import { AuthService } from '../../src/auth/auth.service';
+import { Users } from '../../src/entities/users.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('/api/users')
@@ -25,10 +25,9 @@ export class UsersController {
   ) {}
 
   @Post('/signup')
-  async signUp(@Body() userInfo: signUpUserDto) {
-    console.log(userInfo);
-
-    return await this.userService.signUp(userInfo);
+  async signUp(@Body() userInfo: signUpUserDto, @Res() res) {
+    await this.userService.signUp(userInfo);
+    return res.send({ message: '회원가입 성공' });
   }
 
   @Post('/signin')

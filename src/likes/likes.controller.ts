@@ -10,8 +10,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { LikesService } from './likes.service';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { ProjectsService } from 'src/projects/projects.service';
+import { AuthGuard } from '../../src/auth/guards/auth.guard';
+import { ProjectsService } from '../../src/projects/projects.service';
 
 @Controller('/api/likes')
 export class LikesController {
