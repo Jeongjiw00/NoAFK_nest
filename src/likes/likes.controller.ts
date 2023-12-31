@@ -5,7 +5,6 @@ import {
   Param,
   Post,
   Req,
-  Res,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -33,11 +32,7 @@ export class LikesController {
 
   @UseGuards(AuthGuard)
   @Post('/:projectId')
-  async likeUpDown(
-    @Param('projectId') projectId: number,
-    @Req() req,
-    @Res() res,
-  ) {
+  async likeUpDown(@Param('projectId') projectId: number, @Req() req) {
     const { isLoggedIn, userId } = req.auth;
 
     if (!isLoggedIn) {
@@ -52,6 +47,6 @@ export class LikesController {
 
     await this.likeService.likeUpDown(projectId, userId);
 
-    return res.send();
+    return;
   }
 }

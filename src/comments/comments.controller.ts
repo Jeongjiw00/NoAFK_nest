@@ -8,7 +8,6 @@ import {
   Patch,
   Post,
   Req,
-  Res,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -42,7 +41,6 @@ export class CommentsController {
     @Param('projectId') projectId: number,
     @Body() commentInfo: CreateCommentDto,
     @Req() req,
-    @Res() res,
   ) {
     const { isLoggedIn, userId } = req.auth;
 
@@ -62,7 +60,7 @@ export class CommentsController {
       commentInfo.comment,
     );
 
-    return res.send();
+    return;
   }
 
   @UseGuards(AuthGuard)
@@ -71,7 +69,6 @@ export class CommentsController {
     @Param('projectId') projectId: number,
     @Param('commentId') commentId: number,
     @Req() req,
-    @Res() res,
   ) {
     const { isLoggedIn, userId } = req.auth;
 
@@ -93,7 +90,7 @@ export class CommentsController {
 
     await this.commentService.deleteComment(commentId);
 
-    return res.send();
+    return;
   }
 
   @UseGuards(AuthGuard)
@@ -103,7 +100,6 @@ export class CommentsController {
     @Param('commentId') commentId: number,
     @Body() updateInfo: CreateCommentDto,
     @Req() req,
-    @Res() res,
   ) {
     const { isLoggedIn, userId } = req.auth;
 
@@ -125,6 +121,6 @@ export class CommentsController {
 
     await this.commentService.updateComment(commentId, updateInfo);
 
-    return res.send();
+    return;
   }
 }

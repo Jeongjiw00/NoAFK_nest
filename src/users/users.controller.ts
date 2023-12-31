@@ -45,7 +45,7 @@ export class UsersController {
       httpOnly: true,
     });
 
-    return res.send();
+    return;
   }
 
   @UseGuards(AuthGuard)
@@ -76,7 +76,7 @@ export class UsersController {
 
     await this.authService.removeRefreshToken(userId);
 
-    return res.send();
+    return;
   }
 
   // 마이페이지 회원 정보 가져오기

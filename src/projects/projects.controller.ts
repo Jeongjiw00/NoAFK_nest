@@ -8,7 +8,6 @@ import {
   Patch,
   Post,
   Req,
-  Res,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -67,11 +66,7 @@ export class ProjectsController {
 
   @UseGuards(AuthGuard)
   @Delete('/:projectId')
-  async deleteProject(
-    @Param('projectId') projectId: number,
-    @Req() req,
-    @Res() res,
-  ) {
+  async deleteProject(@Param('projectId') projectId: number, @Req() req) {
     const { isLoggedIn, userId } = req.auth;
 
     if (!isLoggedIn) {
@@ -92,7 +87,7 @@ export class ProjectsController {
 
     await this.projectsService.deleteProject(projectId);
 
-    return res.send();
+    return;
   }
 
   @UseGuards(AuthGuard)
@@ -101,7 +96,6 @@ export class ProjectsController {
     @Param('projectId') projectId: number,
     @Body() updateInfo: UpdateProjectDto,
     @Req() req,
-    @Res() res,
   ) {
     const { isLoggedIn, userId } = req.auth;
 
@@ -123,6 +117,6 @@ export class ProjectsController {
 
     await this.projectsService.updateProject(projectId, updateInfo);
 
-    return res.send();
+    return;
   }
 }
