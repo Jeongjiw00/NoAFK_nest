@@ -174,7 +174,12 @@ describe.skip('UsersService', () => {
   });
 
   describe('updateUserProfile', () => {
-    let userInfo = { nickname: 'test' };
+    let userInfo = {
+      nickname: 'test',
+      email: null,
+      password: null,
+      introduction: null,
+    };
 
     it('should throw 404 error by updateUserProfile', async () => {
       try {
